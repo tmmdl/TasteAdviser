@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    static void parseBooks() { //TODO id+, title+, author+, genre+, desc, year+, source+, status ADD 1984 MANUAL
+    static void parseBooks() {
 
         int count = 0;
         String description = "";

@@ -46,7 +46,6 @@ public class Interaction extends TelegramLongPollingBot{
 
         if (update.hasMessage()) {
 
-            System.out.println("running");
             String query = update.getMessage().getText();
             String text = commands.get(query);
             inputs.add(query);
@@ -58,7 +57,7 @@ public class Interaction extends TelegramLongPollingBot{
                 SendMessage sms = new SendMessage()
                         .setChatId(update.getMessage().getChatId())
                         .setText(text);
-                messages.remove(text); //why does it work?
+                messages.remove(text);
                 System.out.println(text);
 
                 try {
@@ -70,11 +69,11 @@ public class Interaction extends TelegramLongPollingBot{
             if (query.equals("next")) {
                 try {
                     text = messages.get(0);
-                    System.out.println("sent sms (next): " + text);
+                    System.out.println("sent sms: " + text);
                     SendMessage sms = new SendMessage()
                             .setChatId(update.getMessage().getChatId())
                             .setText(text);
-                    messages.remove(text); //why does it work?
+                    messages.remove(text);
                     System.out.println(text);
                     try {
                         execute(sms);

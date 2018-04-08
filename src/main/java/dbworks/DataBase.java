@@ -1,6 +1,5 @@
 package dbworks;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import telegram.Interaction;
 
@@ -37,7 +36,6 @@ public class DataBase {
     public static String get(String type, String key, String value) {
 
         StringBuilder sb = new StringBuilder();
-        ArrayList<String> data = new ArrayList<String>();
         String query = "select * from tastebase where content_type like '%" + type + "%' and additional_content ->> '" + key + "' = '" + value + "'";
         Connection connection = null;
         try {
