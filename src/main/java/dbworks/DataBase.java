@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import telegram.Interaction;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DataBase {
 
