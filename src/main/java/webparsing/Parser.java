@@ -12,16 +12,20 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ *In this class we are parsing websites to get required data
+ */
+
 public class Parser {
 
     static void parseBooks() {
 
         int count = 0;
-        String description = "";
+        String description;
 
         try {
             String url = "https://www.librarything.com/bookaward/501+Must-Read+Books";
-            Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(url).timeout(10*1000).get();
             for (Element element : document.select(".odd")) {
                 try {
                     String tempId = element.select("a[href]").attr("href");

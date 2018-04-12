@@ -5,7 +5,17 @@ import telegram.Interaction;
 
 import java.sql.*;
 
+/**
+ * In this class we are dealing with database. Inserting already parsed data, and getting them based on queries
+ */
+
 public class DataBase {
+
+    /**
+     * The method inserts data to database
+     * @param type type of content (i.e film, music or book)
+     * @param content content is in JSON format
+     */
 
     public static void update(String type, Object content) {
 
@@ -32,11 +42,19 @@ public class DataBase {
         }
     }
 
+    /**
+     * The metod gets data from database based on queries
+     * @param type type of content(i.e film, music, book)
+     * @param key JSON`s key
+     * @param value JSON`s value
+     * @return String
+     */
+
     public static String get(String type, String key, String value) {
 
         StringBuilder sb = new StringBuilder();
         String query = "select * from tastebase where content_type like '%" + type + "%' and additional_content ->> '" + key + "' = '" + value + "'";
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/postgres", "postgres","postgres");
             PreparedStatement ps = connection.prepareStatement(query);

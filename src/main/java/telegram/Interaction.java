@@ -9,16 +9,31 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * The class is tend to keep interaction with user.
+ */
+
 public class Interaction extends TelegramLongPollingBot{
 
-    ArrayList<String> inputs = new ArrayList<String>();
+    ArrayList<String> inputs = new ArrayList<String>(); //keeps user`s inputs
     static ArrayList<String> messages = new ArrayList<String>();
     HashMap<String, String> commands = new HashMap<String, String>();
+
+    /**
+     * adds passed data to arraylist.
+     * in this case data from table based on queries.
+     * @param data
+     */
 
     public static void add(String data) {
 
         messages.add(data);
     }
+
+    /**
+     *The method provides interaction with user
+     * @param update
+     */
 
     public void onUpdateReceived(Update update) {
 
@@ -42,18 +57,17 @@ public class Interaction extends TelegramLongPollingBot{
                 " \nIf you want to find a book by released year, please, type: year");
         commands.put("author", "please, type the author name you wish");
 
-        String command = "/start music genre artist year film director imdb book author next";
+        String commandList = "/start music genre artist year film director imdb book author next";
 
         if (update.hasMessage()) {
 
-            String query = update.getMessage().getText();
-            String text = commands.get(query);
+            String query = update.getMessage().getText(); //user`s input
+            String text = commands.get(query); //text to be sent
             inputs.add(query);
 
-            if (!command.contains(query)) {
+            if (!commandList.contains(query)) {
                 DataBase.get(inputs.get(1), inputs.get(2), inputs.get(3));
                 text = messages.get(0);
-                System.out.println("sent sms: " + text);
                 SendMessage sms = new SendMessage()
                         .setChatId(update.getMessage().getChatId())
                         .setText(text);
@@ -69,12 +83,10 @@ public class Interaction extends TelegramLongPollingBot{
             if (query.equals("next")) {
                 try {
                     text = messages.get(0);
-                    System.out.println("sent sms: " + text);
                     SendMessage sms = new SendMessage()
                             .setChatId(update.getMessage().getChatId())
                             .setText(text);
                     messages.remove(text);
-                    System.out.println(text);
                     try {
                         execute(sms);
                     } catch (TelegramApiException e) {
@@ -85,11 +97,10 @@ public class Interaction extends TelegramLongPollingBot{
                     System.out.println(e);
                 }
             }
-            if (command.contains(query) && !query.equals("next")) {
+            if (commandList.contains(query) && !query.equals("next")) {
                 SendMessage sms = new SendMessage()
                         .setChatId(update.getMessage().getChatId())
                         .setText(text);
-                System.out.println(text);
                 try {
                     execute(sms);
                 } catch (TelegramApiException e) {
